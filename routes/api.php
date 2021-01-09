@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ApiV1\BrewController;
+use App\Http\Controllers\ApiV1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,12 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('V1')->group(function () {
-    Route::post('/register', [\App\Http\Controllers\ApiV1\UserController::class, 'store'])->name('api.user.store');
-    Route::post('/user/token', [\App\Http\Controllers\ApiV1\UserController::class, 'authenticate'])->name('api.user.authenticate');
+    Route::post('/register', [UserController::class, 'store'])->name('api.user.store');
+    Route::post('/user/token', [UserController::class, 'authenticate'])->name('api.user.authenticate');
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
+
+        Route::get('/user/brews', [BrewController::class, 'index'])->name('api.user.brews.index');
+        Route::post('/user/brews', [BrewController::class, 'store'])->name('api.user.brews.store');
+        Route::delete('/user/brew/{brew}', [BrewController::class, 'destroy'])->name('api.user.brews.destroy');
+        Route::patch('/user/brew/{brew}', [BrewController::class, 'update'])->name('api.user.brews.update');
     });
 });
