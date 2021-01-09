@@ -76,6 +76,20 @@ class BrewController extends Controller
         return new BrewResource($brew);
     }
 
+    public function destroy(Request $request, Brew $brew)
+    {
+        if ($request->user()->isNot($brew->user))
+            return response()->json(['message' => 'User is not the owner of the brew'], 403);
+
+        if ($brew == null) {
+            return response()->json(['message' => 'An error occurred while deleting brew'], 404);
+        }
+
+        $brew->delete();
+
+        return response()->json(['message' => 'Brew deleted']);
+    }
+
     /**
      * Validate the request against the validation rules
      *
