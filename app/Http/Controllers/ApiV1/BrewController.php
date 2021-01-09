@@ -10,7 +10,7 @@ use \App\Http\Controllers\Controller;
 class BrewController extends Controller
 {
     /**
-     * Return
+     * Return users brews
      *
      * @param Request $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
