@@ -76,6 +76,14 @@ class BrewController extends Controller
         return new BrewResource($brew);
     }
 
+    /**
+     * Delete a specific brew
+     *
+     * @param Request $request
+     * @param Brew $brew
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function destroy(Request $request, Brew $brew)
     {
         if ($request->user()->isNot($brew->user))
