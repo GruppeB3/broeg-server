@@ -9,5 +9,7 @@ class Brew extends Model
 {
     use HasFactory;
 
+    public const ALLOWED_GRIND_SIZES = ['FINE', 'MEDIUM', 'COARSE'];
+
     protected $guarded = [];
 }

@@ -17,10 +17,10 @@ class CreateBrewsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->text('name');
-            $table->unsignedInteger('grind_size');
+            $table->enum('grind_size', \App\Models\Brew::ALLOWED_GRIND_SIZES);
             $table->double('brewing_temperature');
             $table->double('ground_coffee_amount');
-            $table->double('bloom_amount');
+            $table->double('bloom_water_amount');
             $table->double('coffee_water_ratio');
             $table->unsignedInteger('bloom_time');
             $table->unsignedInteger('total_brew_time');

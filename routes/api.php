@@ -25,6 +25,8 @@ Route::prefix('V1')->group(function () {
             return $request->user();
         });
 
-        Route::get('/user/brews', [BrewController::class, 'index'])->name('api.user.brews');
+        Route::get('/user/brews', [BrewController::class, 'index'])->name('api.user.brews.index');
+        Route::post('/user/brews', [BrewController::class, 'store'])->name('api.user.brews.store');
+        Route::patch('/user/brew/{brew}', [BrewController::class, 'update'])->name('api.user.brews.update');
     });
 });
