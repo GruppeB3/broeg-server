@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ApiV1;
 
 use App\Http\Resources\BrewResource;
 use App\Models\Brew;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use \App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
@@ -52,11 +53,14 @@ class BrewController extends Controller
      *
      * @param Request $request
      * @param Brew $brew
-     * @return BrewResource
+     * @return BrewResource|\Illuminate\Http\JsonResponse
      */
     public function update(Request $request, Brew $brew)
     {
         $this->validateRequest();
+
+        if ($request->user()->isNot($brew->user))
+            return response()->json(['message' => 'User is not the owner of the brew'], 403);
 
         $brew->update([
             'name' => $request->name,
