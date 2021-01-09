@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use \App\Http\Controllers\Controller as Controller;
-use \App\Http\Resources\User as UserResource;
+use \App\Http\Resources\UserResource;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
