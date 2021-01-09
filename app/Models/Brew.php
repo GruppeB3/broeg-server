@@ -12,4 +12,9 @@ class Brew extends Model
     public const ALLOWED_GRIND_SIZES = ['FINE', 'MEDIUM', 'COARSE'];
 
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
