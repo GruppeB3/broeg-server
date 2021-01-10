@@ -20,6 +20,10 @@ Route::prefix('V1')->group(function () {
     Route::post('/register', [UserController::class, 'store'])->name('api.user.store');
     Route::post('/user/token', [UserController::class, 'authenticate'])->name('api.user.authenticate');
 
+    Route::get('/brews/defaults', function () {
+        return \App\Http\Resources\BrewResource::collection(\App\Models\Brew::where('user_id', '=', null)->get());
+    });
+
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/user', function (Request $request) {
             return $request->user();
