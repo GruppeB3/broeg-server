@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ApiV1;
 
+use App\Http\Resources\TokenResource;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -62,6 +63,6 @@ class UserController extends Controller
             ]);
         }
 
-        return $user->createToken($request->device_name)->plainTextToken;
+        return new TokenResource($user->createToken($request->device_name)->plainTextToken);
     }
 }
