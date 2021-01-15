@@ -73,7 +73,7 @@ class BrewController extends Controller
         $brew = Brew::where([
             ['user_id', '=', $request->user()->id],
             ['local_id', '=', $brewInt]
-        ])->get();
+        ])->get()->first();
 
         if ($request->user()->isNot($brew->user))
             return response()->json(['message' => 'User is not the owner of the brew'], 403);
@@ -104,7 +104,7 @@ class BrewController extends Controller
         $brew = Brew::where([
             ['user_id', '=', $request->user()->id],
             ['local_id', '=', $brewInt]
-        ])->get();
+        ])->get()->first();
 
         if ($request->user()->isNot($brew->user))
             return response()->json(['message' => 'User is not the owner of the brew'], 403);
