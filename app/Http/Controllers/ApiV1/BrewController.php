@@ -31,10 +31,21 @@ class BrewController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateRequest();
+        request()->validate([
+            'name' => 'required|string',
+            'local_id' => ['required', Rule::unique('brews')->where(function ($query) { return $query->where('user_id', request()->user()->id); })],
+            'grind_size' => ['required', Rule::in(['FINE', 'MEDIUM', 'COARSE'])],
+            'brewing_temperature' => 'required|integer|gt:0',
+            'ground_coffee_amount' => 'required|numeric|gt:0',
+            'bloom_water_amount' => 'required|numeric|gt:0',
+            'coffee_water_ratio' => 'required|numeric|gt:0',
+            'bloom_time' => 'required|integer|gt:0',
+            'total_brew_time' => 'required|integer|gt:0'
+        ]);
 
         $brew = Brew::create([
             'name' => $request->name,
+            'local_id' => $request->local_id,
             'user_id' => $request->user()->id,
             'grind_size' => $request->grind_size,
             'brewing_temperature' => $request->brewing_temperature,
@@ -52,12 +63,17 @@ class BrewController extends Controller
      * Update a specific brew
      *
      * @param Request $request
-     * @param Brew $brew
+     * @param int $brewInt
      * @return BrewResource|\Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Brew $brew)
+    public function update(Request $request, int $brewInt)
     {
         $this->validateRequest();
+
+        $brew = Brew::where([
+            ['user_id', '=', $request->user()->id],
+            ['local_id', '=', $brewInt]
+        ])->get();
 
         if ($request->user()->isNot($brew->user))
             return response()->json(['message' => 'User is not the owner of the brew'], 403);
@@ -80,12 +96,16 @@ class BrewController extends Controller
      * Delete a specific brew
      *
      * @param Request $request
-     * @param Brew $brew
+     * @param int $brewInt
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
      */
-    public function destroy(Request $request, Brew $brew)
+    public function destroy(Request $request, int $brewInt)
     {
+        $brew = Brew::where([
+            ['user_id', '=', $request->user()->id],
+            ['local_id', '=', $brewInt]
+        ])->get();
+
         if ($request->user()->isNot($brew->user))
             return response()->json(['message' => 'User is not the owner of the brew'], 403);
 

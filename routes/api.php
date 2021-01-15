@@ -31,7 +31,7 @@ Route::prefix('V1')->group(function () {
 
         Route::get('/user/brews', [BrewController::class, 'index'])->name('api.user.brews.index');
         Route::post('/user/brews', [BrewController::class, 'store'])->name('api.user.brews.store');
-        Route::delete('/user/brew/{brew}', [BrewController::class, 'destroy'])->name('api.user.brews.destroy');
-        Route::patch('/user/brew/{brew}', [BrewController::class, 'update'])->name('api.user.brews.update');
+        Route::delete('/user/brew/{brewInt}', [BrewController::class, 'destroy'])->name('api.user.brews.destroy');
+        Route::patch('/user/brew/{brewInt}', [BrewController::class, 'update'])->name('api.user.brews.update');
     });
 });
