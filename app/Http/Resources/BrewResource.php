@@ -15,7 +15,7 @@ class BrewResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->local_id,
+            'id' => ($this->local_id != null) ? $this->local_id : 0,
             'user_id' => $this->user_id,
             'name' => $this->name,
             'grind_size' => $this->grind_size,

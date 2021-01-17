@@ -15,7 +15,7 @@ class AddLocalIdToBrews extends Migration
     public function up()
     {
         Schema::table('brews', function (Blueprint $table) {
-            $table->addColumn('integer', 'local_id')->after('user_id');
+            $table->addColumn('integer', 'local_id')->after('user_id')->nullable()->default(null);
         });
 
         $brews = Brew::all();
