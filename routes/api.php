@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('V1')->group(function () {
     Route::post('/register', [UserController::class, 'store'])->name('api.user.store');
     Route::post('/user/token', [UserController::class, 'authenticate'])->name('api.user.authenticate');
+    Route::post('/user/reset-password', [UserController::class, 'resetPassword'])->name('api.user.password.reset');
 
     Route::get('/brews/defaults', function () {
         return \App\Http\Resources\BrewResource::collection(\App\Models\Brew::where('user_id', '=', null)->get());
